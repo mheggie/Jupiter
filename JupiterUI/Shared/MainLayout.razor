@@ -2,23 +2,6 @@
 
 <PageTitle>JupiterUI</PageTitle>
 
-@*<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>*@
-
 <MudThemeProvider />
 
 <MudLayout>
@@ -28,9 +11,9 @@
         <LoginDisplay />
         <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
     </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <MudDrawerHeader>
-            <MudText Typo="Typo.h5" Class="mt-1">Application</MudText>
+            <MudText Typo="Typo.h5" Class="mt-1">Jupiter</MudText>
         </MudDrawerHeader>
         <NavMenu />
     </MudDrawer>
@@ -40,6 +23,7 @@
         </article>
     </MudMainContent>
 </MudLayout>
+
 @code {
     bool _drawerOpen = true;
 

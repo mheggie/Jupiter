@@ -1,9 +1,17 @@
 ﻿<AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity?.Name!
-        <a href="MicrosoftIdentity/Account/SignOut">Log out</a>
+        <MudText Typo="Typo.subtitle1" >Hello, @context.User.Identity?.Name!</MudText>
+        <MudButton  Href="MicrosoftIdentity/Account/SignOut"
+                    Target="_blank"
+                    Variant="Variant.Filled"
+                    Color="Color.Warning">Logout</MudButton>
+        
     </Authorized>
     <NotAuthorized>
-        <a href="MicrosoftIdentity/Account/SignIn">Log in</a>
+        <MudButton  Href="MicrosoftIdentity/Account/SignIn"
+                    Target="_blank"
+                    Variant="Variant.Filled"
+                    Color="Color.Success">Login</MudButton>
+        <a href="">Log in</a>
     </NotAuthorized>
 </AuthorizeView>
