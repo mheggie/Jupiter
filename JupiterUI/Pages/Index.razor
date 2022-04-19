@@ -1,9 +1,55 @@
 ﻿@page "/"
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
-<PageTitle>Index</PageTitle>
+<h3>ClaimsPrincipal Data</h3>
 
-<h1>Hello, world!</h1>
+<button @onclick="GetClaimsPrincipalData">Get ClaimsPrincipal Data</button>
 
-Welcome to your new app.
+<AuthorizeView>
+    <Authorized>
+        <p>@_authMessage</p>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+        @if (_claims.Count() > 0)
+        {
+            <ul>
+                @foreach (var claim in _claims)
+                {
+                    <li>CLAIM: @claim.Type: @claim.Value</li>
+                }
+            </ul>
+        }
+
+        <p>@_surnameMessage</p>
+    </Authorized>
+    <NotAuthorized>
+        <h1>Welcome</h1>
+        <p>You need to log in.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+    private string _authMessage;
+    private string _surnameMessage;
+    private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+
+    private async Task GetClaimsPrincipalData()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            _authMessage = $"{user.Identity.Name} is authenticated.";
+            _claims = user.Claims;
+            _surnameMessage = 
+                $"Surname: {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
+        }
+        else
+        {
+            _authMessage = "The user is NOT authenticated.";
+        }
+    }
+}
